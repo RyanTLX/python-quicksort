@@ -2,6 +2,7 @@
 # Tan Ryan
 
 from random import randint
+import sys
 
 
 # Lomuto partition scheme
@@ -50,14 +51,34 @@ def quicksort(array, low, high):
 
 
 if __name__ == "__main__":
-    # Create size 10 array of random int from 1-999
-    array = []
-    for i in range(1, 11):
-      array.append(randint(1, 999))
+    arraySize = 10
+    
+    # Use argument as array size
+    if len(sys.argv) > 1:
+      arg = sys.argv[1]
+      try:
+        arraySize = int(arg)
+      except:
+        print("Argument '{}' not accepted for array size.".format(arg))
+        print("Default value {:d} used.".format(arraySize))
+    # If no argument then ask for user input
+    else:
+      try:
+        userInput = input("Enter array size [default {:d}]: ".format(arraySize))
+        
+        # If empty user input then default value is still 10
+        if len(userInput) is not 0:
+          arraySize = int(userInput)
+      except:
+        print("Enter an integer only! Default value {:d} used.".format(arraySize))
 
-    print("Unsorted:", array)
+    arrayToSort = []
+    for i in range(1, int(arraySize) + 1):
+      arrayToSort.append(randint(1, 999))
+
+    print("\nUnsorted:", arrayToSort)
 
     # Start in-place quicksort lomuto style.
-    quicksort(array, 0, len(array) - 1)
+    quicksort(arrayToSort, 0, len(arrayToSort) - 1)
     
-    print("  Sorted:", array)
+    print("  Sorted:", arrayToSort)
